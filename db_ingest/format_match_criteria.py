@@ -24,7 +24,7 @@ def main():
         # Clean up the version data (nan -> NULL)
         # df = df.where(pd.notnull(df), None)
         version_cols = ['version_start_including', 'version_start_excluding', 'version_end_including', 'version_end_excluding']
-        df[version_cols] = df[version_cols].replace({np.nan: 'NULL'})
+        df[version_cols] = df[version_cols].replace({np.nan: None})
 
         # Clean the timestamp data
         print(f"Empty last_modified values: {pd.isna(df.last_modified)}")
