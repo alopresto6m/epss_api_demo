@@ -37,7 +37,7 @@ def main():
 
     # Read the join file
     with open(
-            f"/Users/andylopresto/DataGripProjects/SixMap PGSQL System Design/ingest_data/cpe_match_criteria_formatted.csv") as join_csv_file:
+            f"/Users/andylopresto/Downloads/nistMATCHFormatted_cpeIdJoin.csv") as join_csv_file:
         join_df = pd.read_csv(join_csv_file, header=0)
         join_df.columns = join_df.columns.str.replace(' ', '')
         print('Join:\n', join_df, '\n\n')

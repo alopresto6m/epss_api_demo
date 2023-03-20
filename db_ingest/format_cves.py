@@ -29,8 +29,11 @@ def main():
         print(df.count())
 
         # Drop any rows with vuln_status is bad
+        print(f"All statuses: {df.vuln_status.unique()}")
         bad_statuses = ['Rejected', 'Awaiting Analysis', 'Undergoing Analysis', 'Deferred', 'Received']
-        df = df[~df.vuln_status.str.contains('|'.join(bad_statuses))]
+        bad_status_df = df.vuln_status.str.contains('|'.join(bad_statuses))
+        print('Bad statuses:\n', bad_status_df, '\n\n')
+        df = df[~bad_status_df]
         # df = df[df.vuln_status != 'Rejected']
 
         with pd.option_context('display.max_rows', 10, 'expand_frame_repr', False):
@@ -44,7 +47,6 @@ def main():
             print(df[(df.cvss_score.isna())])
         print(pd.isnull(df.cvss_score).sum())
         print(pd.isnull(df.cvss_score_level_id).sum())
-        # exit(0)
 
         # Convert the CVSS score level ID from decimal to int
         df.cvss_score_level_id = df.cvss_score_level_id.apply(lambda x: int(x))
@@ -81,6 +83,7 @@ def main():
         with pd.option_context('display.max_rows', 2, 'display.max_columns', 40):
             print(df)
 
+    # exit(0)
     output_rows = rows if rows is not None else len(df.index)
     tag = '_' + str(output_rows) if rows is not None else ''
     output_filename = f"/Users/andylopresto/DataGripProjects/SixMap PGSQL System Design/ingest_data/cves_formatted{tag}.csv"
